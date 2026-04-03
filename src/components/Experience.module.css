@@ -1,0 +1,128 @@
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding-left: 20px;
+  margin-top: 40px;
+}
+
+.line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 20px;
+  width: 1px;
+  background: linear-gradient(to bottom, rgba(0, 240, 255, 0.3), rgba(0, 240, 255, 0.05));
+  z-index: 0;
+}
+
+.item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.dot {
+  position: absolute;
+  left: -20px;
+  top: 32px;
+  width: 40px;
+  height: 40px;
+  background: rgba(13, 13, 43, 0.8);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--plasma);
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+}
+
+.card {
+  margin-left: 48px;
+  padding: 32px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--supernova);
+  margin-bottom: 8px;
+}
+
+.company {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--plasma);
+  display: flex;
+  align-items: center;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--stardust-dim);
+  gap: 4px;
+}
+
+.bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bullets li {
+  position: relative;
+  padding-left: 20px;
+  color: var(--stardust);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.bullets li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--plasma);
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .meta {
+    align-items: flex-start;
+  }
+  
+  .card {
+    padding: 24px;
+  }
+}
