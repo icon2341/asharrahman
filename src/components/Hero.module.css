@@ -86,14 +86,20 @@
   margin: 0;
 }
 
-.nameFirst {
-  color: #ffffff;
-  text-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
-}
-
-.nameLast {
-  color: #ffffff;
-  text-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+.nameFirst, .nameLast {
+  background: linear-gradient(
+    to bottom,
+    #d1f2fb 0%,
+    #ffffff 45%,
+    #0d1128 50%,
+    #3f1b51 55%,
+    #ff007a 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 122, 0.5));
 }
 
 .tagline {
