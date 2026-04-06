@@ -1,17 +1,80 @@
 .main {
   position: relative;
   min-height: 100vh;
-  background: var(--void);
+  background: var(--paper);
 }
 
 .sectionWrapper {
   position: relative;
   z-index: 2;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(6, 6, 15, 0.6) 5%,
-    rgba(6, 6, 15, 0.6) 95%,
-    transparent 100%
-  );
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+.pongSection {
+  position: relative;
+  z-index: 2;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+/* ── Shake Button ── */
+.shakeBtn {
+  position: fixed;
+  bottom: var(--space-xl);
+  right: var(--space-xl);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  cursor: pointer;
+  transition: all 200ms;
+  letter-spacing: 0.05em;
+}
+
+.shakeBtn:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.shakeBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.shakeBtnIcon {
+  font-size: 1rem;
+  display: inline-block;
+  transition: transform 300ms;
+}
+
+.shakeBtn:hover .shakeBtnIcon {
+  transform: rotate(180deg);
+}
+
+.shakeBtnText {
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .sectionWrapper {
+    padding: 0 var(--space-md);
+  }
+  .pongSection {
+    padding: 0 var(--space-md);
+  }
+  .shakeBtn {
+    bottom: var(--space-md);
+    right: var(--space-md);
+    padding: 8px 14px;
+    font-size: 0.65rem;
+  }
 }

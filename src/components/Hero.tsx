@@ -1,7 +1,7 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useEffect, useState, useRef, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import styles from './Hero.module.css';
 
@@ -12,152 +12,221 @@ const roles = [
   'Startup Operator',
 ];
 
-export default function Hero() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [roleIndex, setRoleIndex] = useState(0);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end start'],
-  });
+const missionLines = [
+  {
+    prefix: 'DESIGNATION',
+    text: 'Founding Engineer. Builder. Operator.',
+  },
+  {
+    prefix: 'MISSION',
+    text: 'Ship AI-native products that fundamentally change how people live, work, and experience the world.',
+  },
+  {
+    prefix: 'APPROACH',
+    text: 'Zero-to-one execution at startup velocity. From RAG pipelines to Voice AI—prototype to production, alone or leading teams.',
+  },
+  {
+    prefix: 'PHILOSOPHY',
+    text: 'Technology only matters when it reaches people. The last mile—the moment a product clicks for a real human—is where every decision gets made.',
+  },
+  {
+    prefix: 'STATUS',
+    text: 'Building Local — an AI concierge replacing 5 apps with one agent. Previously: Founding Engineer at Aviary AI (YC S22), $3M ARR.',
+  },
+];
 
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9]);
-  const y = useTransform(scrollYProgress, [0, 0.5], [0, -80]);
+const FULL_NAME = 'ASHAR RAHMAN';
+
+export default function Hero() {
+  const [typedName, setTypedName] = useState('');
+  const [showCursor, setShowCursor] = useState(true);
+  const [nameComplete, setNameComplete] = useState(false);
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [typedRole, setTypedRole] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showContent, setShowContent] = useState(false);
+  const [missionOpen, setMissionOpen] = useState(false);
+  const roleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Type out the name
+  useEffect(() => {
+    if (typedName.length < FULL_NAME.length) {
+      const timeout = setTimeout(() => {
+        setTypedName(FULL_NAME.slice(0, typedName.length + 1));
+      }, 80 + Math.random() * 60);
+      return () => clearTimeout(timeout);
+    } else {
+      setTimeout(() => {
+        setNameComplete(true);
+        setShowContent(true);
+      }, 400);
+    }
+  }, [typedName]);
+
+  // Typewriter cycle for roles
+  const typeRole = useCallback(() => {
+    const currentRole = roles[roleIndex];
+
+    if (isDeleting) {
+      if (typedRole.length > 0) {
+        roleTimeoutRef.current = setTimeout(() => {
+          setTypedRole(typedRole.slice(0, -1));
+        }, 30);
+      } else {
+        setIsDeleting(false);
+        setRoleIndex((prev) => (prev + 1) % roles.length);
+      }
+    } else {
+      if (typedRole.length < currentRole.length) {
+        roleTimeoutRef.current = setTimeout(() => {
+          setTypedRole(currentRole.slice(0, typedRole.length + 1));
+        }, 60 + Math.random() * 40);
+      } else {
+        roleTimeoutRef.current = setTimeout(() => {
+          setIsDeleting(true);
+        }, 2000);
+      }
+    }
+  }, [typedRole, roleIndex, isDeleting]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % roles.length);
-    }, 2500);
+    if (!nameComplete) return;
+    typeRole();
+    return () => {
+      if (roleTimeoutRef.current) clearTimeout(roleTimeoutRef.current);
+    };
+  }, [nameComplete, typeRole]);
+
+  // Blink cursor
+  useEffect(() => {
+    const interval = setInterval(() => setShowCursor((v) => !v), 530);
     return () => clearInterval(interval);
   }, []);
 
-  const handleScroll = () => {
-    const el = document.querySelector('#mission');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
-    <section ref={containerRef} className={styles.hero} id="hero">
-      <motion.div className={styles.content} style={{ opacity, scale, y }}>
-        {/* Floating stat cards */}
-        <motion.div
-          className={styles.floatCard}
-          style={{ top: '15%', right: '8%' }}
-          animate={{ y: [0, -12, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <div className={styles.floatCardValue}>YC S22</div>
-          <div className={styles.floatCardLabel}>Backed Startup</div>
-        </motion.div>
-
-        <motion.div
-          className={styles.floatCard}
-          style={{ bottom: '28%', left: '5%' }}
-          animate={{ y: [0, -15, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-        >
-          <div className={styles.floatCardValue}>$3M</div>
-          <div className={styles.floatCardLabel}>ARR Product</div>
-        </motion.div>
-
-        <motion.div
-          className={styles.floatCard}
-          style={{ top: '25%', left: '3%' }}
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-        >
-          <div className={styles.floatCardValue}>3.71</div>
-          <div className={styles.floatCardLabel}>GPA · Magna Cum Laude</div>
-        </motion.div>
-
-        {/* Main heading */}
-        <motion.div
-          className={styles.headingWrapper}
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <motion.p
-            className={styles.subtitle}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-          >
-            <span className={styles.roleText} key={roleIndex}>
-              {roles[roleIndex]}
-            </span>
-          </motion.p>
-
+    <section className={styles.hero} id="hero">
+      <div className={styles.content}>
+        {/* Name with typewriter */}
+        <div className={styles.nameBlock}>
           <h1 className={styles.name}>
-            <span className={styles.nameFirst}>ASHAR</span>
-            <span className={styles.nameLast}>RAHMAN</span>
-          </h1>
-
-          <motion.p
-            className={styles.tagline}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 1 }}
-          >
-            Building AI-native products from 0→1.
-            <br />
-            <span className={styles.taglineAccent}>
-              Formerly founding engineer at Aviary AI (YC S22).
+            {typedName}
+            <span className={`${styles.cursor} ${showCursor ? styles.cursorVisible : ''}`}>
+              █
             </span>
-          </motion.p>
+          </h1>
+        </div>
 
-          <motion.div
-            className={styles.ctas}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.8 }}
-          >
-            <button className="btn-primary" onClick={() => {
-              const el = document.querySelector('#projects');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }}>
-              <span>Explore My Universe</span>
-            </button>
-            <button className="btn-outline" onClick={() => {
-              const el = document.querySelector('#contact');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }}>
-              <span>Get In Touch</span>
-            </button>
-          </motion.div>
-        </motion.div>
+        {/* Role typewriter */}
+        <AnimatePresence>
+          {nameComplete && (
+            <motion.div
+              className={styles.roleBlock}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <span className={styles.rolePrefix}>&gt; </span>
+              <span className={styles.roleText}>{typedRole}</span>
+              <span className={`${styles.roleCursor} ${showCursor ? styles.cursorVisible : ''}`}>
+                _
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Tagline + CTAs */}
+        <AnimatePresence>
+          {showContent && (
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <p className={styles.tagline}>
+                Building AI-native products from 0→1.
+                <br />
+                <span className={styles.taglineSub}>
+                  Formerly founding engineer at Aviary AI (YC S22).
+                </span>
+              </p>
+
+              {/* Mission dropdown */}
+              <div className={styles.missionDropdown}>
+                <button
+                  className={`${styles.missionToggle} ${missionOpen ? styles.missionOpen : ''}`}
+                  onClick={() => setMissionOpen(!missionOpen)}
+                >
+                  <span className={styles.missionToggleText}>
+                    {missionOpen ? '[-]' : '[+]'} mission_statement.txt
+                  </span>
+                  <ChevronDown
+                    size={14}
+                    className={`${styles.missionChevron} ${missionOpen ? styles.missionChevronOpen : ''}`}
+                  />
+                </button>
+
+                <AnimatePresence>
+                  {missionOpen && (
+                    <motion.div
+                      className={styles.missionContent}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className={styles.missionInner}>
+                        {missionLines.map((line) => (
+                          <div key={line.prefix} className={styles.missionLine}>
+                            <span className={styles.missionPrefix}>{line.prefix}:</span>
+                            <span className={styles.missionText}>{line.text}</span>
+                          </div>
+                        ))}
+                        <div className={styles.missionSignature}>— Ashar Rahman</div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <div className={styles.ctas}>
+                <button
+                  className="btn-primary"
+                  onClick={() => {
+                    const el = document.querySelector('#projects');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  <span>view projects</span>
+                </button>
+                <button
+                  className="btn-outline"
+                  onClick={() => {
+                    const el = document.querySelector('#contact');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  <span>get in touch</span>
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Scroll indicator */}
-        <motion.button
+        <motion.div
           className={styles.scrollIndicator}
-          onClick={handleScroll}
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={{ opacity: showContent ? 1 : 0 }}
           transition={{ delay: 1.5, duration: 1 }}
         >
-          <span className={styles.scrollText}>warp drive engaged</span>
+          <span className={styles.scrollText}>scroll</span>
           <motion.span
-            animate={{ y: [0, 6, 0] }}
+            animate={{ y: [0, 4, 0] }}
             transition={{ duration: 1.5, repeat: Infinity }}
           >
-            <ChevronDown size={18} />
+            ↓
           </motion.span>
-        </motion.button>
-      </motion.div>
-
-      {/* Warp lines overlay */}
-      <div className={styles.warpLines}>
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div
-            key={i}
-            className={styles.warpLine}
-            style={{
-              top: `${10 + i * 12}%`,
-              animationDelay: `${i * 0.4}s`,
-              opacity: 0.03 + Math.random() * 0.05,
-            }}
-          />
-        ))}
+        </motion.div>
       </div>
     </section>
   );

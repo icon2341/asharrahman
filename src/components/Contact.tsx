@@ -2,30 +2,27 @@
 
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, Link2, ExternalLink } from 'lucide-react';
+import { Mail, Phone, ExternalLink } from 'lucide-react';
 import styles from './Contact.module.css';
 
 const contactItems = [
   {
-    icon: <Phone size={20} />,
+    icon: <Phone size={14} />,
     label: 'Phone',
     value: '(585) 362-6165',
     href: 'tel:5853626165',
-    color: '#00f0ff',
   },
   {
-    icon: <Mail size={20} />,
+    icon: <Mail size={14} />,
     label: 'Email',
     value: 'asharrahman02@gmail.com',
     href: 'mailto:asharrahman02@gmail.com',
-    color: '#ffd700',
   },
   {
-    icon: <Link2 size={20} />,
+    icon: <ExternalLink size={14} />,
     label: 'LinkedIn',
     value: 'linkedin.com/in/ashar-rahman',
     href: 'https://www.linkedin.com/in/ashar-rahman/',
-    color: '#7b2ff7',
   },
 ];
 
@@ -45,7 +42,6 @@ export default function Contact() {
 
     setSending(true);
 
-    // Simulate transmission animation then open email client
     setTimeout(() => {
       const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
       const body = encodeURIComponent(`From: ${name}\nEmail: ${email}\n\n${message}`);
@@ -53,7 +49,7 @@ export default function Contact() {
       setSending(false);
       setSent(true);
       setTimeout(() => setSent(false), 4000);
-    }, 1200);
+    }, 800);
   };
 
   return (
@@ -63,17 +59,17 @@ export default function Contact() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
       >
-        <div className="section-label">Establish Comms</div>
+        <div className="section-label">connect</div>
         <h2 className="section-title">Get In Touch</h2>
         <p className={styles.intro}>
-          Open to exciting opportunities, collaborations, and conversations.
+          Open to opportunities, collaborations, and conversations.
           <br />
-          Let&apos;s build something remarkable.
+          Let&apos;s build something.
         </p>
       </motion.div>
 
       <div className={styles.layout}>
-        {/* Contact cards */}
+        {/* Contact links */}
         <div className={styles.cards}>
           {contactItems.map((item, i) => (
             <motion.a
@@ -82,63 +78,46 @@ export default function Contact() {
               target={item.href.startsWith('http') ? '_blank' : undefined}
               rel="noopener noreferrer"
               className={styles.contactCard}
-              style={{ '--accent': item.color } as React.CSSProperties}
-              initial={{ opacity: 0, x: -30 }}
+              initial={{ opacity: 0, x: -16 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ x: 6 }}
+              transition={{ delay: i * 0.08, duration: 0.4 }}
             >
-              <span className={styles.contactIcon} style={{ color: item.color, borderColor: item.color + '30', background: item.color + '12' }}>
-                {item.icon}
-              </span>
+              <span className={styles.contactIcon}>{item.icon}</span>
               <div>
                 <div className={styles.contactLabel}>{item.label}</div>
                 <div className={styles.contactValue}>{item.value}</div>
               </div>
-              <ExternalLink size={14} className={styles.contactArrow} />
             </motion.a>
           ))}
-
-          {/* Signal animation */}
-          <div className={styles.signal}>
-            {[1, 2, 3].map((n) => (
-              <div
-                key={n}
-                className={styles.signalRing}
-                style={{ animationDelay: `${n * 0.5}s` }}
-              />
-            ))}
-            <div className={styles.signalCore} />
-          </div>
         </div>
 
         {/* Form */}
         <motion.div
           className={styles.formWrap}
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.5 }}
         >
           <form ref={formRef} className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.row}>
               <div className={styles.field}>
-                <label className={styles.label}>Name</label>
-                <input name="name" required className={styles.input} placeholder="Your name" />
+                <label className={styles.label}>name</label>
+                <input name="name" required className={styles.input} placeholder="_" />
               </div>
               <div className={styles.field}>
-                <label className={styles.label}>Email</label>
-                <input name="email" type="email" required className={styles.input} placeholder="your@email.com" />
+                <label className={styles.label}>email</label>
+                <input name="email" type="email" required className={styles.input} placeholder="_" />
               </div>
             </div>
             <div className={styles.field}>
-              <label className={styles.label}>Message</label>
+              <label className={styles.label}>message</label>
               <textarea
                 name="message"
                 required
                 className={styles.textarea}
-                placeholder="Tell me about your project or opportunity..."
+                placeholder="..."
                 rows={5}
               />
             </div>
@@ -149,14 +128,11 @@ export default function Contact() {
               disabled={sending || sent}
             >
               {sent ? (
-                <>✓ Transmission Sent — Check Your Email App</>
+                <>✓ sent — check your email app</>
               ) : sending ? (
-                <>
-                  <span className={styles.transmitting}>Transmitting</span>
-                  <span className={styles.dots} />
-                </>
+                <>sending...</>
               ) : (
-                <>Transmit Message</>
+                <>send message</>
               )}
             </button>
           </form>
@@ -164,7 +140,7 @@ export default function Contact() {
       </div>
 
       <div className={styles.footer}>
-        <p>Made with ❤ in New York · © {new Date().getFullYear()} Ashar Rahman</p>
+        <p>made in new york · © {new Date().getFullYear()} ashar rahman</p>
       </div>
     </section>
   );

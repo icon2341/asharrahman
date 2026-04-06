@@ -1,13 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Rocket, Building2, FlaskConical } from 'lucide-react';
-import GlassCard from './GlassCard';
 import styles from './Experience.module.css';
 
 const experiences = [
   {
-    icon: <Rocket size={22} />,
     title: 'Founding Engineer',
     company: 'Aviary AI',
     badge: 'YC S22',
@@ -24,7 +21,6 @@ const experiences = [
     tags: ['React', 'Next.js', 'TypeScript', 'LangGraph', 'AWS', 'Azure', 'RAG', 'Voice AI'],
   },
   {
-    icon: <Building2 size={22} />,
     title: 'Software Engineer Co-Op',
     company: 'Toast Inc',
     badge: 'Business Platform',
@@ -38,7 +34,6 @@ const experiences = [
     tags: ['Kotlin', 'PostgreSQL', 'AWS Lambda', 'Java'],
   },
   {
-    icon: <FlaskConical size={22} />,
     title: 'Undergraduate Researcher',
     company: 'CLASP Lab — RIT',
     badge: 'AI/ML',
@@ -61,7 +56,7 @@ export default function Experience() {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <div className="section-label">Mission Log</div>
+        <div className="section-label">log</div>
         <h2 className="section-title">Experience</h2>
       </motion.div>
 
@@ -69,18 +64,17 @@ export default function Experience() {
         <div className={styles.line} />
 
         {experiences.map((exp, i) => (
-          <div key={i} className={styles.item}>
-            <motion.div
-              className={styles.dot}
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, type: 'spring', stiffness: 300 }}
-            >
-              {exp.icon}
-            </motion.div>
+          <motion.div
+            key={i}
+            className={styles.item}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
+          >
+            <div className={styles.dot}>+</div>
 
-            <GlassCard delay={i * 0.1} className={styles.card}>
+            <div className={styles.card}>
               <div className={styles.header}>
                 <div>
                   <h3 className={styles.title}>{exp.title}</h3>
@@ -106,8 +100,8 @@ export default function Experience() {
                   <span key={tag} className="tag">{tag}</span>
                 ))}
               </div>
-            </GlassCard>
-          </div>
+            </div>
+          </motion.div>
         ))}
       </div>
     </section>

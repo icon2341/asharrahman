@@ -1,38 +1,38 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-xl);
 }
 
 .category {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  padding: var(--space-lg);
+  border: 1px solid rgba(17, 17, 17, 0.15);
+  transition: border-color var(--duration-normal);
+}
+
+.category:hover {
+  border-color: var(--ink);
 }
 
 .categoryTitle {
-  font-family: var(--font-mono);
-  font-size: 0.95rem;
-  letter-spacing: 0.05em;
+  font-size: 0.75rem;
+  font-weight: 500;
   text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid rgba(17, 17, 17, 0.15);
 }
 
 .pillContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--space-xs);
 }
 
-.pill {
-  background: rgba(13, 13, 43, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 10px 20px;
-  border-radius: 999px;
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  color: var(--stardust);
-  cursor: default;
-  transition: color 0.3s;
+@media (max-width: 640px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
 }

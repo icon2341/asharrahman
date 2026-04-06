@@ -14,8 +14,6 @@ const projects = [
     tagline: 'AI concierge for planning social outings in NYC',
     description:
       'AI-native personal concierge that replaces the 5-app social planning nightmare. Transforms the fragmented TikTok→Google→Maps→Resy workflow into a single autonomous agent.',
-    gradient: 'linear-gradient(135deg, #00f0ff 0%, #7b2ff7 100%)',
-    accent: '#00f0ff',
     tags: ['Next.js', 'React Native', 'GCP', 'TypeScript', 'Voice AI', 'RAG', 'pgvector'],
     stats: [
       { label: 'NYC Venues', value: '40k+' },
@@ -60,8 +58,6 @@ const projects = [
     tagline: 'Enterprise AI knowledge platform (YC S22)',
     description:
       'Knowledge Base RAG platform and agentic AI tooling used by Fortune 500 enterprises. Product-owned the platform as Founding Engineer from prototype to $3M ARR.',
-    gradient: 'linear-gradient(135deg, #7b2ff7 0%, #ff4060 100%)',
-    accent: '#7b2ff7',
     tags: ['React', 'Next.js', 'TypeScript', 'LangGraph', 'AWS', 'Azure', 'SAML', 'RAG'],
     stats: [
       { label: 'ARR', value: '$3M' },
@@ -102,8 +98,6 @@ const projects = [
     tagline: 'Carry the prayers of your loved ones to Umrah',
     description:
       'Spiritual web app that lets pilgrims collect du\'as from friends and family before Umrah, carry them to the Haram, and notify submitters when their prayer is completed.',
-    gradient: 'linear-gradient(135deg, #ffd700 0%, #ff9500 100%)',
-    accent: '#ffd700',
     tags: ['Next.js', 'TypeScript', 'PostgreSQL', 'Email', 'Auth'],
     stats: [
       { label: 'Mission', value: 'Spiritual' },
@@ -140,8 +134,6 @@ const projects = [
     tagline: 'Fintech event management platform',
     description:
       'Online fintech platform that makes hosting events easier, more integrated, and cheaper — handling payments, vendor integrations, and seamless guest experiences.',
-    gradient: 'linear-gradient(135deg, #00ff88 0%, #00c8ff 100%)',
-    accent: '#00ff88',
     tags: ['React', 'TypeScript', 'Firebase', 'Bootstrap', 'MUI', 'Node'],
     stats: [
       { label: 'Type', value: 'Fintech' },
@@ -174,7 +166,7 @@ export default function Projects() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
       >
-        <div className="section-label">Discoveries</div>
+        <div className="section-label">work</div>
         <h2 className="section-title">Projects</h2>
       </motion.div>
 
@@ -183,20 +175,15 @@ export default function Projects() {
           <motion.div
             key={project.id}
             className={`${styles.card} ${project.priority ? styles.featured : ''}`}
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.5, delay: i * 0.08 }}
             onClick={() => setSelected(project)}
           >
-            {/* Gradient top bar */}
-            <div className={styles.gradientBar} style={{ background: project.gradient }} />
-
             <div className={styles.cardInner}>
               {project.priority && (
-                <span className="tag tag-solar" style={{ marginBottom: 12, display: 'inline-flex' }}>
-                  ★ Featured Project
-                </span>
+                <span className={styles.featuredTag}>★ featured</span>
               )}
 
               <h3 className={styles.name}>{project.name}</h3>
@@ -207,7 +194,7 @@ export default function Projects() {
               <div className={styles.stats}>
                 {project.stats.map((s) => (
                   <div key={s.label} className={styles.stat}>
-                    <div className={styles.statValue} style={{ color: project.accent }}>{s.value}</div>
+                    <div className={styles.statValue}>{s.value}</div>
                     <div className={styles.statLabel}>{s.label}</div>
                   </div>
                 ))}
@@ -220,9 +207,8 @@ export default function Projects() {
                 ))}
               </div>
 
-              <div className={styles.cta} style={{ borderColor: project.accent + '40' }}>
-                <span style={{ color: project.accent }}>View Details</span>
-                <ExternalLink size={14} style={{ color: project.accent }} />
+              <div className={styles.cta}>
+                <span>view details →</span>
               </div>
             </div>
           </motion.div>
@@ -240,17 +226,14 @@ export default function Projects() {
               exit={{ opacity: 0 }}
               onClick={() => setSelected(null)}
             />
-            {/* Wrapping in modalWrapper to ensure centering isn't overridden by framer motion inline styles */}
             <div className={styles.modalWrapper}>
               <motion.div
                 className={styles.modal}
-                initial={{ opacity: 0, scale: 0.95, y: 40 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 40 }}
-                transition={{ ease: [0.16, 1, 0.3, 1], duration: 0.45 }}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 30 }}
+                transition={{ duration: 0.3 }}
               >
-                <div className={styles.modalGradient} style={{ background: selected.gradient }} />
-
                 <div className={styles.modalHeader}>
                   <div>
                     <h2 className={styles.modalTitle}>{selected.name}</h2>
@@ -264,11 +247,11 @@ export default function Projects() {
                       className={styles.modalLink}
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <Globe size={16} />
-                      <span>Visit</span>
+                      <Globe size={14} />
+                      <span>visit</span>
                     </a>
                     <button className={styles.closeBtn} onClick={() => setSelected(null)}>
-                      <X size={20} />
+                      <X size={18} />
                     </button>
                   </div>
                 </div>
@@ -278,13 +261,11 @@ export default function Projects() {
                     <motion.div
                       key={s.title}
                       className={styles.modalSection}
-                      initial={{ opacity: 0, x: -20 }}
+                      initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 + i * 0.05 }}
+                      transition={{ delay: 0.05 + i * 0.04 }}
                     >
-                      <h4 className={styles.modalSectionTitle} style={{ color: selected.accent }}>
-                        {s.title}
-                      </h4>
+                      <h4 className={styles.modalSectionTitle}>{s.title}</h4>
                       <p className={styles.modalSectionBody}>{s.body}</p>
                     </motion.div>
                   ))}

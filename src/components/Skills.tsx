@@ -7,17 +7,14 @@ const skillCategories = [
   {
     title: 'Frontend & UI',
     skills: ['React', 'Next.js 15', 'TypeScript', 'Tailwind', 'Framer Motion', 'Three.js'],
-    accent: '#00f0ff',
   },
   {
     title: 'AI & Data',
     skills: ['LangGraph', 'OpenAI / Claude', 'RAG', 'Vector DBs (pgvector)', 'Voice AI (Pipecat)'],
-    accent: '#ff4060', // Hot pink/magenta
   },
   {
     title: 'Backend & Infra',
     skills: ['Node.js', 'Python', 'FastAPI', 'PostgreSQL', 'GCP', 'AWS', 'Redis'],
-    accent: '#7b2ff7', // Deep purple
   },
 ];
 
@@ -29,7 +26,7 @@ export default function Skills() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
       >
-        <div className="section-label">Toolkit</div>
+        <div className="section-label">toolkit</div>
         <h2 className="section-title">Skills & Tech</h2>
       </motion.div>
 
@@ -38,32 +35,17 @@ export default function Skills() {
           <motion.div
             key={category.title}
             className={styles.category}
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ delay: i * 0.1, duration: 0.5 }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ delay: i * 0.1, duration: 0.4 }}
           >
-            <h3 className={styles.categoryTitle} style={{ color: category.accent }}>
-              {category.title}
-            </h3>
+            <h3 className={styles.categoryTitle}>{category.title}</h3>
             <div className={styles.pillContainer}>
-              {category.skills.map((skill, j) => (
-                <motion.div
-                  key={skill}
-                  className={styles.pill}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 + j * 0.05, duration: 0.4 }}
-                  whileHover={{ 
-                    scale: 1.05, 
-                    borderColor: category.accent,
-                    boxShadow: `0 0 15px ${category.accent}40`,
-                    color: '#fff'
-                  }}
-                >
+              {category.skills.map((skill) => (
+                <span key={skill} className="tag">
                   {skill}
-                </motion.div>
+                </span>
               ))}
             </div>
           </motion.div>

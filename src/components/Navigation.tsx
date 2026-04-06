@@ -5,7 +5,6 @@ import Link from 'next/link';
 import styles from './Navigation.module.css';
 
 const navItems = [
-  { label: 'Mission', href: '/mission' },
   { label: 'Experience', href: '#experience' },
   { label: 'Projects', href: '#projects' },
   { label: 'Skills', href: '#skills' },
@@ -25,7 +24,7 @@ export default function Navigation() {
     <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}>
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
-          <span className={styles.logoMark}>✦</span> ASHAR
+          <span className={styles.logoMark}>&gt;_</span> ashar
         </Link>
         <div className={styles.links}>
           {navItems.map((item) => (

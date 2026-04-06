@@ -1,0 +1,78 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+}
+
+.game {
+  position: relative;
+  width: 600px;
+  max-width: 100%;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(245, 240, 232, 0.7);
+}
+
+.playBtn {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink);
+  background: transparent;
+  border: 2px solid var(--ink);
+  padding: 12px 32px;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  transition: all 200ms;
+}
+
+.playBtn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.winnerBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.winnerText {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+}
+
+.controls {
+  font-size: 0.7rem;
+  color: var(--faded);
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .game {
+    width: 100%;
+  }
+  .playBtn {
+    font-size: 0.85rem;
+    padding: 10px 24px;
+  }
+}

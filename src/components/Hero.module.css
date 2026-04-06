@@ -4,149 +4,185 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 120px 24px;
-  overflow: hidden;
-  z-index: 1;
+  padding: var(--space-5xl) var(--space-xl);
+  z-index: 2;
 }
 
 .content {
-  position: relative;
-  z-index: 10;
-  max-width: 1200px;
+  max-width: var(--max-width);
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
-/* Floating Stats Cards */
-.floatCard {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  padding: 16px 24px;
-  border-radius: 12px;
-  background: rgba(13, 13, 43, 0.4);
-  border: 1px solid rgba(0, 240, 255, 0.15);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  z-index: 5;
-}
-
-.floatCardValue {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--supernova);
-}
-
-.floatCardLabel {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--stardust-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-@media (max-width: 1024px) {
-  .floatCard {
-    display: none;
-  }
-}
-
-.headingWrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.subtitle {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  letter-spacing: 0.25em;
-  color: var(--supernova);
-  text-transform: uppercase;
-  margin-bottom: 24px;
+/* ── Name ── */
+.nameBlock {
+  margin-bottom: var(--space-md);
 }
 
 .name {
-  font-family: var(--font-display);
-  font-size: clamp(4rem, 15vw, 12rem);
-  font-weight: 800;
-  line-height: 0.85;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
+  font-size: clamp(2.5rem, 9vw, 4.5rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink);
+  display: inline;
 }
 
-.nameFirst, .nameLast {
-  background: linear-gradient(
-    to bottom,
-    #d1f2fb 0%,
-    #ffffff 45%,
-    #0d1128 50%,
-    #3f1b51 55%,
-    #ff007a 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 122, 0.5));
+.cursor {
+  font-weight: 300;
+  opacity: 0;
+  margin-left: 2px;
+  font-size: 0.8em;
+  animation: none;
 }
 
+.cursorVisible {
+  opacity: 1;
+}
+
+/* ── Role ── */
+.roleBlock {
+  font-size: 0.95rem;
+  color: var(--faded);
+  margin-bottom: var(--space-xl);
+  min-height: 1.4em;
+}
+
+.rolePrefix {
+  color: var(--ink);
+  opacity: 0.4;
+}
+
+.roleText {
+  color: var(--ink);
+}
+
+.roleCursor {
+  opacity: 0;
+  margin-left: 1px;
+}
+
+/* ── Tagline ── */
 .tagline {
-  margin-top: 32px;
-  font-size: 1.25rem;
-  color: var(--stardust);
-  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--ink-light);
+  margin-bottom: var(--space-lg);
+  max-width: 540px;
 }
 
-.taglineAccent {
-  font-size: 1rem;
-  color: var(--stardust-dim);
-  display: block;
-  margin-top: 8px;
+.taglineSub {
+  color: var(--faded);
 }
 
-.ctas {
-  margin-top: 48px;
+/* ── Mission Dropdown ── */
+.missionDropdown {
+  margin-bottom: var(--space-xl);
+  max-width: 560px;
+}
+
+.missionToggle {
   display: flex;
-  gap: 24px;
   align-items: center;
-}
-
-.scrollIndicator {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  color: var(--plasma);
+  gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+  font-size: 0.8rem;
+  color: var(--faded);
+  cursor: pointer;
+  transition: color var(--duration-fast);
   background: none;
   border: none;
-  cursor: pointer;
-  z-index: 10;
-  opacity: 0.7;
+  font-family: var(--font-mono);
+}
+
+.missionToggle:hover {
+  color: var(--ink);
+}
+
+.missionToggleText {
+  letter-spacing: 0.02em;
+}
+
+.missionChevron {
+  transition: transform var(--duration-normal);
+}
+
+.missionChevronOpen {
+  transform: rotate(180deg);
+}
+
+.missionContent {
+  overflow: hidden;
+}
+
+.missionInner {
+  padding: var(--space-md) 0;
+  padding-left: var(--space-md);
+  border-left: 1px solid var(--ink);
+  margin-left: 4px;
+}
+
+.missionLine {
+  margin-bottom: var(--space-md);
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+
+.missionPrefix {
+  color: var(--faded);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.6rem;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.missionText {
+  color: var(--ink-light);
+}
+
+.missionSignature {
+  color: var(--faded);
+  font-style: italic;
+  font-size: 0.7rem;
+  margin-top: var(--space-md);
+}
+
+/* ── CTAs ── */
+.ctas {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+/* ── Scroll Indicator ── */
+.scrollIndicator {
+  position: absolute;
+  bottom: var(--space-xl);
+  left: var(--space-xl);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.65rem;
+  color: var(--faded);
+  letter-spacing: 0.1em;
 }
 
 .scrollText {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.3em;
   text-transform: uppercase;
 }
 
-.warpLines {
-  display: none;
+@media (max-width: 640px) {
+  .hero {
+    padding: var(--space-3xl) var(--space-md);
+    padding-top: calc(var(--nav-height) + var(--space-3xl));
+  }
+
+  .name {
+    font-size: clamp(1.5rem, 10vw, 2.5rem);
+  }
+
+  .scrollIndicator {
+    bottom: var(--space-md);
+    left: var(--space-md);
+  }
 }
