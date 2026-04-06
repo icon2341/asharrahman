@@ -228,6 +228,8 @@ export default function Hero() {
           </motion.span>
         </motion.div>
       </div>
+      {/* <img src="me.JPG" className={styles.avatar} alt="Ashar" /> */}
+
     </section>
   );
 }
